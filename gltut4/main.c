@@ -28,15 +28,19 @@ int main(int argc, const char * argv[]) {
     GLuint vao;
     GLuint vbo;
     GLuint ebo;
+    GLuint tex, tex1;
+    
+    unsigned char *img;
+    int width, height, nrChannel;
     GLuint program;
     
     
     GLfloat square[] = {
-        //Position          //Color
-        -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,
-        -0.5,  0.5, 0.0,    0.0, 1.0, 0.0,
-         0.5, -0.5, 0.0,    0.0, 0.0, 1.0,
-         0.5,  0.5, 0.0,    0.0, 0.0, 0.0,
+        //Position          //Color         //Texture
+        -0.5, -0.5, 0.0,    1.0, 0.0, 0.0,  0.0, 0.0,
+        -0.5,  0.5, 0.0,    0.0, 1.0, 0.0,  0.0, 1.0,
+         0.5, -0.5, 0.0,    0.0, 0.0, 1.0,  1.0, 0.0,
+         0.5,  0.5, 0.0,    0.0, 0.0, 0.0,  1.0, 1.0
     };
     
     GLuint index[] = {
@@ -74,6 +78,54 @@ int main(int argc, const char * argv[]) {
     // insert code here...
     program = initShaderFiles("vshader.vsh", "fshader.fsh");
     
+    //-----------------------------------------------------//
+    //Texture Data                                         //
+    //-----------------------------------------------------//
+    
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    img = stbi_load("container.jpg", &width, &height, &nrChannel, 0);
+    if(img){
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        stbi_image_free(img);
+    }
+    else{
+        printf("No image.\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    glActiveTexture(GL_TEXTURE1);
+    glGenTextures(1, &tex1);
+    
+    glBindTexture(GL_TEXTURE_2D, tex1);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    stbi_set_flip_vertically_on_load(1);
+    img = stbi_load("awesomeface.png", &width, &height, &nrChannel, 0);
+    if(img){
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        stbi_image_free(img);
+    }
+    else{
+        printf("No image.\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    //------------------------
+    //Buffers
+    //------------------------
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     
@@ -87,17 +139,36 @@ int main(int argc, const char * argv[]) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(index), index, GL_STATIC_DRAW);
     printf("1\n");
     gl_sanity_test();
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)0);
+    
+    //----------------------------
+    //Setting Attribute locations
+    //----------------------------
+    
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
+    glEnableVertexAttribArray(1);
+    
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
+    glEnableVertexAttribArray(2);
+    
+    
+    glUseProgram(program);
+    glUniform1i(glGetUniformLocation(program, "texture0"), 0);
+    
+    glUniform1i(glGetUniformLocation(program, "texture1"), 1);
     printf("3\n");
     gl_sanity_test();
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(3*sizeof(float)));
-    glEnableVertexAttribArray(1);
-    glUseProgram(program);
     while (!glfwWindowShouldClose(window)) {
         
         glClearColor(1.0,1.0,1.0,1.0);
         glClear(GL_COLOR_BUFFER_BIT);
+        
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, tex);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, tex1);
         
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         

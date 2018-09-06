@@ -15,6 +15,8 @@
 		5246E52A213E211B00F608E6 /* shouldbe33.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5246E529213E1E0A00F608E6 /* shouldbe33.txt */; };
 		5281A74E213FA5DF00434067 /* vshader.vsh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5246E52B213E21AD00F608E6 /* vshader.vsh */; };
 		5281A74F213FA5E900434067 /* fshader.fsh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5246E52C213E21C500F608E6 /* fshader.fsh */; };
+		5281A7522140DF7200434067 /* container.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5281A7502140D9D900434067 /* container.jpg */; };
+		5281A7532140E43F00434067 /* awesomeface.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5281A7512140DA0B00434067 /* awesomeface.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,6 +26,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				5281A7532140E43F00434067 /* awesomeface.png in CopyFiles */,
+				5281A7522140DF7200434067 /* container.jpg in CopyFiles */,
 				5281A74F213FA5E900434067 /* fshader.fsh in CopyFiles */,
 				5281A74E213FA5DF00434067 /* vshader.vsh in CopyFiles */,
 				5246E52A213E211B00F608E6 /* shouldbe33.txt in CopyFiles */,
@@ -44,6 +48,8 @@
 		5246E529213E1E0A00F608E6 /* shouldbe33.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shouldbe33.txt; path = ../../../shouldbe33.txt; sourceTree = "<group>"; };
 		5246E52B213E21AD00F608E6 /* vshader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vshader.vsh; sourceTree = "<group>"; };
 		5246E52C213E21C500F608E6 /* fshader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fshader.fsh; sourceTree = "<group>"; };
+		5281A7502140D9D900434067 /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = container.jpg; path = ../../../OpenGLStuff/container.jpg; sourceTree = "<group>"; };
+		5281A7512140DA0B00434067 /* awesomeface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = awesomeface.png; path = ../../../OpenGLStuff/awesomeface.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +85,8 @@
 		5246E514213E06FC00F608E6 /* gltut4 */ = {
 			isa = PBXGroup;
 			children = (
+				5281A7512140DA0B00434067 /* awesomeface.png */,
+				5281A7502140D9D900434067 /* container.jpg */,
 				5246E529213E1E0A00F608E6 /* shouldbe33.txt */,
 				5246E527213E094E00F608E6 /* shader.c */,
 				5246E526213E094E00F608E6 /* shader.h */,
