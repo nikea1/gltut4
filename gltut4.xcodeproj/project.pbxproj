@@ -12,11 +12,11 @@
 		5246E520213E07CD00F608E6 /* libglfw.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5246E51F213E07CD00F608E6 /* libglfw.3.2.dylib */; };
 		5246E522213E07F400F608E6 /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = 5246E521213E07F400F608E6 /* glad.c */; };
 		5246E528213E094E00F608E6 /* shader.c in Sources */ = {isa = PBXBuildFile; fileRef = 5246E527213E094E00F608E6 /* shader.c */; };
-		5246E52A213E211B00F608E6 /* shouldbe33.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5246E529213E1E0A00F608E6 /* shouldbe33.txt */; };
 		5281A74E213FA5DF00434067 /* vshader.vsh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5246E52B213E21AD00F608E6 /* vshader.vsh */; };
 		5281A74F213FA5E900434067 /* fshader.fsh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5246E52C213E21C500F608E6 /* fshader.fsh */; };
 		5281A7522140DF7200434067 /* container.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5281A7502140D9D900434067 /* container.jpg */; };
 		5281A7532140E43F00434067 /* awesomeface.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5281A7512140DA0B00434067 /* awesomeface.png */; };
+		5281A7572140E9A000434067 /* libglmc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5281A7562140E9A000434067 /* libglmc.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,7 +30,6 @@
 				5281A7522140DF7200434067 /* container.jpg in CopyFiles */,
 				5281A74F213FA5E900434067 /* fshader.fsh in CopyFiles */,
 				5281A74E213FA5DF00434067 /* vshader.vsh in CopyFiles */,
-				5246E52A213E211B00F608E6 /* shouldbe33.txt in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,11 +44,11 @@
 		5246E525213E094D00F608E6 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_image.h; path = ../../../OpenGLStuff/stb_image.h; sourceTree = "<group>"; };
 		5246E526213E094E00F608E6 /* shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shader.h; path = ../../../OpenGLStuff/shader.h; sourceTree = "<group>"; };
 		5246E527213E094E00F608E6 /* shader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = shader.c; path = ../../../OpenGLStuff/shader.c; sourceTree = "<group>"; };
-		5246E529213E1E0A00F608E6 /* shouldbe33.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shouldbe33.txt; path = ../../../shouldbe33.txt; sourceTree = "<group>"; };
 		5246E52B213E21AD00F608E6 /* vshader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vshader.vsh; sourceTree = "<group>"; };
 		5246E52C213E21C500F608E6 /* fshader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fshader.fsh; sourceTree = "<group>"; };
 		5281A7502140D9D900434067 /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = container.jpg; path = ../../../OpenGLStuff/container.jpg; sourceTree = "<group>"; };
 		5281A7512140DA0B00434067 /* awesomeface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = awesomeface.png; path = ../../../OpenGLStuff/awesomeface.png; sourceTree = "<group>"; };
+		5281A7562140E9A000434067 /* libglmc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglmc.a; path = ../../OpenGLStuff/glmc/libglmc.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5281A7572140E9A000434067 /* libglmc.a in Frameworks */,
 				5246E520213E07CD00F608E6 /* libglfw.3.2.dylib in Frameworks */,
 				5246E51E213E077D00F608E6 /* OpenGL.framework in Frameworks */,
 			);
@@ -87,7 +87,6 @@
 			children = (
 				5281A7512140DA0B00434067 /* awesomeface.png */,
 				5281A7502140D9D900434067 /* container.jpg */,
-				5246E529213E1E0A00F608E6 /* shouldbe33.txt */,
 				5246E527213E094E00F608E6 /* shader.c */,
 				5246E526213E094E00F608E6 /* shader.h */,
 				5246E525213E094D00F608E6 /* stb_image.h */,
@@ -102,6 +101,7 @@
 		5246E51C213E077C00F608E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5281A7562140E9A000434067 /* libglmc.a */,
 				5246E51F213E07CD00F608E6 /* libglfw.3.2.dylib */,
 				5246E51D213E077D00F608E6 /* OpenGL.framework */,
 			);
@@ -285,6 +285,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/glfw/3.2.1/lib,
+					../../OpenGLStuff/glmc,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -298,6 +299,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/glfw/3.2.1/lib,
+					../../OpenGLStuff/glmc,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
