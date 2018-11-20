@@ -90,14 +90,17 @@ int main(int argc, const char * argv[]) {
     t_vec3 axis = {0.0, 0.0, 1.0};
     t_vec3 scale = {0.5, 0.5, 0.5};
     t_mat4 trans;
+    
+    //testing out vertecies and matricies
+    //made a translation matrix and multipied it by the point in vec2
     glmc_identity(trans);
     glmc_translate(trans, vec2, temp);
     copyMat4(temp, trans);
     mat4_x_vec4(trans, vec, v_out);
     
-    
     printf("X: %lf, Y: %lf, Z: %lf, W: %lf\n", v_out[0], v_out[1], v_out[2], v_out[3]);
     
+    //created matrix that shinks shape and rotates
     glmc_identity(trans);
     glmc_rotate(trans, degree_to_radian(90.0), axis, temp);
     copyMat4(temp, trans);
@@ -245,19 +248,35 @@ int main(int argc, const char * argv[]) {
     glUniform1i(glGetUniformLocation(program, "texture1"), 1);
     printf("3\n");
     gl_sanity_test();
+    
+    //draw loop
     while (!glfwWindowShouldClose(window)) {
         
         glClearColor(1.0,1.0,1.0,1.0);
         glClear(GL_COLOR_BUFFER_BIT);
         
+        //draws textures
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, tex);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, tex1);
         
+        //draws square
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         
+        //Rotates awesome crate counter clockwise in the bottom right size of window
+        glmc_identity(trans);
+        glmc_vec3(0.5, -0.5, 0.0, vec2);
+        glmc_translate(trans, vec2, temp);
+        copyMat4(temp, trans);
+        glmc_vec3(0.0, 0.0, 1.0, vec2);
+        glmc_translate(trans, vec2, temp);
+        glmc_rotate(trans, glfwGetTime(), vec2, temp);
+        copyMat4(temp, trans);
+        toFloatMat4(trans, out);
         
+        glUniformMatrix4fv(transLoc, 1, GL_FALSE, out);
+        //end of rotation matrix
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
