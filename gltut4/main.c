@@ -90,6 +90,7 @@ int main(int argc, const char * argv[]) {
     t_vec3 axis = {0.0, 0.0, 1.0};
     t_vec3 scale = {0.5, 0.5, 0.5};
     t_mat4 trans;
+    double time;
     
     //testing out vertecies and matricies
     //made a translation matrix and multipied it by the point in vec2
@@ -160,10 +161,10 @@ int main(int argc, const char * argv[]) {
     
     glUseProgram(program); //must call this before getting any uniform location
     
-    
+    //get location of matrix uniform
     transLoc = glGetUniformLocation(program, "transform");
     
-    glUniformMatrix4fv(transLoc, 1, GL_FALSE, out);
+    //glUniformMatrix4fv(transLoc, 1, GL_FALSE, out);
     printf("1\n");
     gl_sanity_test();
     //-----------------------------------------------------//
@@ -232,12 +233,15 @@ int main(int argc, const char * argv[]) {
     //Setting Attribute locations
     //----------------------------
     
+    //position
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     
+    //color
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
     glEnableVertexAttribArray(1);
     
+    //texture
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
     glEnableVertexAttribArray(2);
     
@@ -251,7 +255,7 @@ int main(int argc, const char * argv[]) {
     
     //draw loop
     while (!glfwWindowShouldClose(window)) {
-        
+        //clear window
         glClearColor(1.0,1.0,1.0,1.0);
         glClear(GL_COLOR_BUFFER_BIT);
         
@@ -261,22 +265,49 @@ int main(int argc, const char * argv[]) {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, tex1);
         
-        //draws square
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        
-        //Rotates awesome crate counter clockwise in the bottom right size of window
+        //Rotates awesome crate counter clockwise in the bottom right side of window
+        //initialize matrix
         glmc_identity(trans);
+        
+        //Translation
         glmc_vec3(0.5, -0.5, 0.0, vec2);
         glmc_translate(trans, vec2, temp);
         copyMat4(temp, trans);
+        
+        //Rotation
         glmc_vec3(0.0, 0.0, 1.0, vec2);
-        glmc_translate(trans, vec2, temp);
         glmc_rotate(trans, glfwGetTime(), vec2, temp);
         copyMat4(temp, trans);
+    
+        //convert to float matrix
         toFloatMat4(trans, out);
         
         glUniformMatrix4fv(transLoc, 1, GL_FALSE, out);
-        //end of rotation matrix
+        //end of matrix
+        
+        //draws square
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        
+        //Second crate expands and contracts over time in the top left side of window
+        
+        //initialize matrix
+        glmc_identity(trans);
+        
+        //Translation
+        glmc_vec3(-0.5, 0.5, 0.0, vec2);
+        glmc_translate(trans, vec2, temp);
+        copyMat4(temp, trans);
+        
+        //Scale
+        time = glfwGetTime();
+        glmc_vec3(sin(time), sin(time), sin(time), vec2);
+        glmc_scale(trans, vec2, temp);
+        copyMat4(temp, trans);
+        toFloatMat4(trans, out);
+        glUniformMatrix4fv(transLoc, 1, GL_FALSE, out);
+        //draws square
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
